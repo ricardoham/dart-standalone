@@ -1,4 +1,5 @@
 import 'api.dart';
+import 'controller/products_controller.dart';
 
 /// This type initializes an application.
 ///
@@ -33,6 +34,9 @@ class ApiChannel extends ApplicationChannel {
       .linkFunction((request) async {
         return Response.ok({"key": "value"});
       });
+    router
+      .route("/products")
+      .link(() => ProductsController());
 
     return router;
   }
