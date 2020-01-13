@@ -9,6 +9,15 @@ class ProductsController extends Controller {
 
   @override
   Future<RequestOrResponse> handle(Request request) async {
+    if (request.path.variables.containsKey('id')) {
+      final id = int.parse(request.path.variables['id']);
+      final product = _products.firstWhere((p) => p['id'] == id, orElse: () => null);
+      
+      if(product == null) {
+        return Response.notFound();
+      }
+      return Response.ok(product);
+    }
     return Response.ok(_products);
   }
 }

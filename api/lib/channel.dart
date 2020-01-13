@@ -35,7 +35,7 @@ class ApiChannel extends ApplicationChannel {
         return Response.ok({"key": "value"});
       });
     router
-      .route("/products")
+      .route("/products/[:id]")
       .link(() => ProductsController());
 
     return router;
