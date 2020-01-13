@@ -13,8 +13,8 @@ class ProductsController extends ResourceController {
   }
 
   @Operation.get('id')
-  Future<Response> getProductById() async {
-      final id = int.parse(request.path.variables['id']);
+  Future<Response> getProductById(@Bind.path('id') int id) async {
+      // final id = int.parse(request.path.variables['id']); // Deprecated
       final product = _products.firstWhere((p) => p['id'] == id, orElse: () => null);
       if(product == null) {
         return Response.notFound();
