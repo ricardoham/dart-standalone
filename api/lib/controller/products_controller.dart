@@ -1,23 +1,24 @@
 import 'package:aqueduct/aqueduct.dart';
 
-class ProductsController extends Controller {
+class ProductsController extends ResourceController {
   final _products = [
     {'id': 1, 'name': 'Television'},
     {'id': 2, 'name': 'Table'},
     {'id': 3, 'name': 'PC'},
   ];
 
-  @override
-  Future<RequestOrResponse> handle(Request request) async {
-    if (request.path.variables.containsKey('id')) {
+  @Operation.get()
+  Future<Response> getAllProducts() async {
+    return Response.ok(_products);
+  }
+
+  @Operation.get('id')
+  Future<Response> getProductById() async {
       final id = int.parse(request.path.variables['id']);
       final product = _products.firstWhere((p) => p['id'] == id, orElse: () => null);
-      
       if(product == null) {
         return Response.notFound();
       }
-      return Response.ok(product);
-    }
     return Response.ok(_products);
   }
 }
