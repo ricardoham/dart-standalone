@@ -1,10 +1,11 @@
+import 'package:api/model/products.dart';
 import 'package:aqueduct/aqueduct.dart';
 
 class ProductsController extends ResourceController {
-  List products = [
-    {'id': 1, 'name': 'Television'},
-    {'id': 2, 'name': 'Table'},
-    {'id': 3, 'name': 'PC'},
+  final List<Products> products = [
+    Products()..id = 1 ..name = 'Television',
+    Products()..id = 2 ..name = 'Table',
+    Products()..id = 3 ..name = 'PC',
   ];
 
   // final List<Products> produc
@@ -15,8 +16,8 @@ class ProductsController extends ResourceController {
 
   @Operation.get('id')
   Future<Response> getProductById(@Bind.path('id') int id) async {
-      // final id = int.parse(request.path.variables['id']); // Deprecated
-      final product = products.firstWhere((p) => p['id'] == id, orElse: () => null);
+      final id = int.parse(request.path.variables['id']);
+      final product = products.firstWhere((p) => p.id == id, orElse: () => null);
       if(product == null) {
         return Response.notFound();
       }
@@ -24,13 +25,13 @@ class ProductsController extends ResourceController {
   }
 
   @Operation.post()
-  Future<Response> createProduct(@Bind.body() product) async {
+  Future<Response> createProduct(@Bind.body() Products product) async {
     products.add(product);
     return Response.ok(products);
   }
 
   @Operation.put()
-  Future<Response> changeProduct(@Bind.body() product) async {
+  Future<Response> changeProduct(@Bind.body() Products product) async {
     products.removeAt(products.indexWhere((r) => r.id == product.id));
     products.add(product);
     return Response.ok(products);
