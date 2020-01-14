@@ -1,7 +1,12 @@
+import 'package:api/api.dart';
 import 'package:api/model/products.dart';
 import 'package:aqueduct/aqueduct.dart';
 
 class ProductsController extends ResourceController {
+
+  ProductsController() {
+    acceptedContentTypes = [ContentType.json];
+  }
   final List<Products> products = [
     Products()..id = 1 ..name = 'Television',
     Products()..id = 2 ..name = 'Table',
